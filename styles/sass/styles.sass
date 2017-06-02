@@ -32,12 +32,16 @@ html, body, #content
         background: darken($pink, 5%)
 
 div[class^="star-"]
-    background: url(../assets/star.svg) no-repeat left top
+    background: url(../../assets/star.svg) no-repeat left top
     height: 22px
     width: 22px
     position: absolute
     z-index: -1
 
+#canvas
+    position: fixed
+    z-index: -1
+    
 #content
     color: $white
     text-align: center
@@ -48,7 +52,7 @@ div[class^="star-"]
         vertical-align: middle
 
 #logo 
-    background: url(../assets/wordmark.svg) no-repeat left top
+    background: url(../../assets/wordmark.svg) no-repeat left top
     background-size: 100% 100%
     width: 525px
     height: 217px

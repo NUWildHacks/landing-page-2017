@@ -1,11 +1,9 @@
 const HEIGHT = window.innerHeight;
 const WIDTH = window.innerWidth;
-const NUM_STARS = 5;
-const CANVAS_OFFSET_X = 100;
-const CANVAS_OFFSET_Y = 100;
+const NUM_STARS = HEIGHT * WIDTH / 10000 > 1000 ? 1000 : HEIGHT * WIDTH / 10000;
 
 var canvas = document.getElementById("canvas");
-canvas.width = WIDTH;
+canvas.width = WIDTH + 40;
 canvas.height = HEIGHT;
 var context = canvas.getContext('2d');
 
@@ -18,7 +16,6 @@ function Star(speed, x, y) {
   this.speed = speed;
   this.x = x;
   this.y = y;
-  this.counter = 0;
 }
 
 Star.prototype.generateId = function() {
@@ -27,8 +24,7 @@ Star.prototype.generateId = function() {
 
 Star.prototype.update = function() {
   if (!this.hasDied()) {
-    this.counter += (this.speed / 100);
-    this.x += this.counter;
+    this.x += this.speed;
     context.drawImage(starGraphic, this.x, this.y);
   } else {
     stars.recycle(this.id);
@@ -36,7 +32,7 @@ Star.prototype.update = function() {
 }
 
 Star.prototype.hasDied = function() {
-  return this.y > HEIGHT || this.y < 0 || this.x > WIDTH || this.x < 0;
+  return this.y > canvas.height || this.y < 0 || this.x > canvas.width || this.x < 0;
 }
 
 function Stars() {
@@ -52,7 +48,7 @@ Stars.prototype.findById = function(id) {
 }
 
 Stars.prototype.recycle = function(id) {
-  var index = this.findById(id); 
+  var index = this.findById(id);
   if (index != -1) {
     this.collection.splice(index, 1);
     this.drawStar(0);
@@ -69,10 +65,10 @@ Stars.prototype.append = function (star) {
 }
 
 Stars.prototype.drawStar = function(startX) {
-  var x = startX != undefined ? startX : randchoice(CANVAS_OFFSET_X, WIDTH - CANVAS_OFFSET_X);
-  var y = randchoice(CANVAS_OFFSET_Y, HEIGHT - CANVAS_OFFSET_Y);
+  var x = startX != undefined ? startX : randchoice(0, canvas.width);
+  var y = randchoice(0, canvas.height);
 
-  var speed = 0.2 + Math.random() * 3;
+  var speed = .2;
   var star = new Star(speed, x, y);
   stars.append(star);
 }
@@ -85,7 +81,8 @@ function drawStars() {
 }
 
 function render() {
-  context.clearRect(0, 0, WIDTH, HEIGHT);
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.globalAlpha = 0.8;
 
   for (var i = 0; i < stars.len(); i++) {
     stars.get(i).update();

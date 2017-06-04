@@ -2,9 +2,9 @@
 @import 'colors'
 @import 'fonts'
 
-html 
+html
     background-color: $navy
-    animation: sky-color-change infinite 20s
+    animation: sky-color-change infinite 30s
     font-family: $primary
     font-size: 12px
 
@@ -28,7 +28,7 @@ html, body, #content
     border: none
     border-radius: 4px
 
-    &:hover 
+    &:hover
         background: darken($pink, 5%)
 
 div[class^="star-"]
@@ -39,19 +39,20 @@ div[class^="star-"]
     z-index: -1
 
 #canvas
-    position: fixed
+    position: absolute
     z-index: -1
-    
+    margin-left: -20px
+
 #content
     color: $white
     text-align: center
     display: table
 
-    .inner 
+    .inner
         display: table-cell
         vertical-align: middle
 
-#logo 
+#logo
     background: url(../../assets/wordmark.svg) no-repeat left top
     background-size: 100% 100%
     width: 525px
@@ -94,7 +95,7 @@ div[class^="star-"]
 @keyframes sky-color-change
     0%
         background-color: $navy
-    50% 
+    50%
         background-color: $black
     100%
         background-color: $navy
